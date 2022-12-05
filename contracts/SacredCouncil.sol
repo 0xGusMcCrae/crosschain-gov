@@ -2,24 +2,27 @@
 
 pragma solidity ^0.8.9;
 
-import "@openzeppelin/contracts/governance/Governor.sol";
-import "@openzeppelin/contracts/governance/extensions/GovernorSettings.sol";
-import "@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol";
-import "@openzeppelin/contracts/governance/extensions/GovernorVotes.sol";
-import "@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol";
+import "../node_modules/@openzeppelin/contracts/governance/Governor.sol";
+import "../node_modules/@openzeppelin/contracts/governance/extensions/GovernorSettings.sol";
+import "../node_modules/@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol";
+import "../node_modules/@openzeppelin/contracts/governance/extensions/GovernorVotes.sol";
+import "../node_modules/@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol";
+import "./interfaces/IInbox.sol"; //not sure if I even actually need this - the function call will
+//be made as an encoded call via governance vote, the interface will probably just be used offchain
+//to generate the necessary calldata
 
 contract SacredCouncil is Governor, GovernorSettings, GovernorCountingSimple, GovernorVotes, GovernorVotesQuorumFraction {
 
-    constructor(IVotes _token)
+    address public immutable L2Proxy;
+
+    constructor(IVotes _token, address _L2Proxy)
         Governor("Sacred Council")
         GovernorSettings(1 /* 1 block */, 50400 /* 1 week */, 0)
         GovernorVotes(_token)
         GovernorVotesQuorumFraction(4)
-    {}
-
-
-
-
+    {
+        L2Proxy = _L2Proxy;
+    }
 
     // The following functions are overrides required by Solidity.
 

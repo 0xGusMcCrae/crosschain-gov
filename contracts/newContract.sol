@@ -2,17 +2,25 @@
 
 pragma solidity ^0.8.9;
 
-import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
+import "../node_modules/@openzeppelin/contracts/proxy/utils/Initializable.sol";
 
-contract NewContract {
+contract NewContract is Initializable {
 
-    string private immutable IDENTIFIER;
+    string private IDENTIFIER;
 
-    function initialize() reinitializer(2) public {
+    constructor() public {
+        _disableInitializers(); //disables initalize function in the context of the implementation contract's state
+    }
+
+    function initialize(uint8 version) public reinitializer(version)  {
         IDENTIFIER = 'New Contract';
     }
 
-    function getIdentifier() public pure returns (string memory) {
+    function getIdentifier() public view returns (string memory) {
         return IDENTIFIER;
+    }
+
+    function getVersion() external view returns (uint8) {
+        _getInitializedVersion();
     }
 }
