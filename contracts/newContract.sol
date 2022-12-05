@@ -21,6 +21,10 @@ contract NewContract is Initializable {
     }
 
     function getVersion() external view returns (uint8) {
-        _getInitializedVersion();
+        return _getInitializedVersion();
     }
+
+    // function isInitializing() external view returns (bool) {
+    //     return _isInitializing();
+    // }
 }

@@ -21,15 +21,13 @@ contract ProxyContract is ERC1967Proxy, CrossChainEnabledArbitrumL2, Ownable {
         _upgradeToAndCall(newImplementation, initializerCall, false);
     }
 
-    function getL1Call(uint256 _ticketId) public onlyOwner {
-        //arbchainId = arb goerli? which is 421613. Or mainnet?
-        //_ticketId will come from the inbox contract on L1
-        bytes32 ticketId = bytes32(abi.encodePacked(abi.encodePacked(uint(421613), _ticketId), uint(0) ));
-        ArbRetryableTx(address(110)).redeem(ticketId);
+    function getL1Call(bytes32 _ticketId) public onlyOwner {
+        //_ticketId will come from event emitted by ArbRetryableTx on L2
+        ArbRetryableTx(address(110)).redeem(_ticketId);
     }
 
-    function getImplmentation() external view returns (address) {
-        _implementation();
+    function getImplementation() external view returns (address) {
+        return ERC1967Proxy._implementation();
     }
 
 }

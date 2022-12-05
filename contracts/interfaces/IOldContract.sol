@@ -9,4 +9,6 @@ interface IOldContract {
     function getIdentifier() external view returns (string memory);
 
     function getVersion() external view returns (uint8);
+
+    function isInitializing() external view returns (bool);
 }

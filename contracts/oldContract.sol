@@ -12,7 +12,7 @@ contract OldContract is Initializable {
         _disableInitializers(); //disables initalize function in the context of the implementation contract's state
     }
 
-    function initialize() public reinitializer(1)  {
+    function initialize() public initializer  {
         IDENTIFIER = 'Old Contract';
     }
 
@@ -21,6 +21,10 @@ contract OldContract is Initializable {
     }
 
     function getVersion() external view returns (uint8) {
-        _getInitializedVersion();
+        return _getInitializedVersion();
     }
+
+    // function isInitializing() external view returns (bool) {
+    //     return _isInitializing();
+    // }
 }
