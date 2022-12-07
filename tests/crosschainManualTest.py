@@ -7,13 +7,13 @@ inbox = interface.IInbox('0x6BEbC4925716945D46F0Ec336D5C2564F419682C')
 #issues with copy/pasting bytecode, so going to interface on inbox to generate correct bytecode on mainnet goerli 
 new = interface.INewContract(inbox.address)
 newAddress = '0xa4D68274649FEA4A74dC69D1fbCd924502dEAcB6'
-newProxyInitCall = new.initialize.encode_input(25)
+newProxyInitCall = new.initialize.encode_input(27)
 proxy = interface.IProxyContract(inbox.address)
 proxyOld = interface.IOldContract(inbox.address)
 payload = proxy.setNewImplementation.encode_input(newAddress,newProxyInitCall)
-fee = inbox.calculateRetryableSubmissionFee(175,0) #not 100% sure if that's correct length. In fact, gonna jsut bump it up to be safe (164 was the original)
+fee = inbox.calculateRetryableSubmissionFee(200,0) 
 
-tx = inbox.createRetryableTicket(proxyAddress,0,1000000,accounts[0].address,accounts[0].address,1000000,fee*2,payload,{'from': accounts[0], 'value':accounts[0].balance()/4})
+tx = inbox.createRetryableTicket(proxyAddress,0,1000000,accounts[0].address,accounts[0].address,10000000,fee*3,payload,{'from': accounts[0], 'value':accounts[0].balance()/4})
 
 
 ##### The below should be done via arbitrum goerli websocket ####
@@ -24,6 +24,7 @@ arbRetryableTx = interface.ArbRetryableTx('0x00000000000000000000000000000000000
 ticketCreatedFilter = web3.eth.contract(address=arbRetryableTx.address, abi=arbRetryableTx.abi).events.TicketCreated.createFilter(fromBlock='latest')
 ticketCreatedFilter.get_new_entries()
 
+#event listener loop
 import time
 events = []
 while(True):
@@ -42,6 +43,4 @@ while(True):
 
 ticketId = events[0][0]['args']['ticketId']
 
-#then call redeem and it DOES work.
-# well, it did the first time - didn't this time! Not sure what went wrong 
-# I honestly might just be running low on goerli eth so my msg.value is too low
+#then call redeem on arbRetryableTx and it DOES work with the function call as is above.

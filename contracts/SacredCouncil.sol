@@ -13,16 +13,12 @@ import "./interfaces/IInbox.sol"; //not sure if I even actually need this - the 
 
 contract SacredCouncil is Governor, GovernorSettings, GovernorCountingSimple, GovernorVotes, GovernorVotesQuorumFraction {
 
-    address public immutable L2Proxy;
-
-    constructor(IVotes _token, address _L2Proxy)
+    constructor(IVotes _token)
         Governor("Sacred Council")
-        GovernorSettings(1 /* 1 block */, 50400 /* 1 week */, 0)
+        GovernorSettings(1 /* 1 block */, 50 /* 10 minutes */, 0) //voting delay, voting period (in blocks --> ~12 seconds each), proposal threshold
         GovernorVotes(_token)
         GovernorVotesQuorumFraction(4)
-    {
-        L2Proxy = _L2Proxy;
-    }
+    {}
 
     // The following functions are overrides required by Solidity.
 
