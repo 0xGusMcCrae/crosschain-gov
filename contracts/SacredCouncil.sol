@@ -7,9 +7,7 @@ import "../node_modules/@openzeppelin/contracts/governance/extensions/GovernorSe
 import "../node_modules/@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol";
 import "../node_modules/@openzeppelin/contracts/governance/extensions/GovernorVotes.sol";
 import "../node_modules/@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol";
-import "./interfaces/IInbox.sol"; //not sure if I even actually need this - the function call will
-//be made as an encoded call via governance vote, the interface will probably just be used offchain
-//to generate the necessary calldata
+
 
 contract SacredCouncil is Governor, GovernorSettings, GovernorCountingSimple, GovernorVotes, GovernorVotesQuorumFraction {
 
