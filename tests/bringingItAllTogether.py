@@ -88,6 +88,7 @@ ticketCreatedFilter = web3.eth.contract(address=arbRetryableTx.address, abi=arbR
 ticketCreatedFilter.get_new_entries()
 
 #event listener loop
+#break manually once event occurs
 import time
 events = []
 while(True):

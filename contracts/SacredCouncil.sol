@@ -8,7 +8,9 @@ import "../node_modules/@openzeppelin/contracts/governance/extensions/GovernorCo
 import "../node_modules/@openzeppelin/contracts/governance/extensions/GovernorVotes.sol";
 import "../node_modules/@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol";
 
-
+///@title Sacred Council
+///@author 0xGusMcCrae
+///@notice This contract is a basic governor contract made by the openzeppelin wizard
 contract SacredCouncil is Governor, GovernorSettings, GovernorCountingSimple, GovernorVotes, GovernorVotesQuorumFraction {
 
     constructor(IVotes _token)
