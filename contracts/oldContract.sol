@@ -24,7 +24,4 @@ contract OldContract is Initializable {
         return _getInitializedVersion();
     }
 
-    // function isInitializing() external view returns (bool) {
-    //     return _isInitializing();
-    // }
 }
