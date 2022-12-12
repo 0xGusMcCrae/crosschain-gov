@@ -1,2 +1,4 @@
-Governance is handled on L1 and proposals are executed on L2. In this case we're doing a proposal to redirect a proxy to a new implementation/logic contract. 
+Governance vote on L1 sends a call to Arbitrum inbox for proxy implementation upgrade on L2.
+
+See tests/bringingItAllTogether.py for detailed steps to test on mainnet Goerli and Arbitrum's Goerli rollup.
 
